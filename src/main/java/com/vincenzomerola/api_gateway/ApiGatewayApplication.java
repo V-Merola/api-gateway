@@ -52,7 +52,6 @@ Rimuovere l'Esclusione in Futuro: Se in futuro decidi di sfruttare le funzionali
 
 @SpringBootApplication(exclude = {ReactiveManagementWebSecurityAutoConfiguration.class})
 @EnableDiscoveryClient
-
 public class ApiGatewayApplication {
 
 	public static void main(String[] args) {
