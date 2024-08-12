@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ public class JwtService {
     @Value("${security.jwt.secret-key}")
     private String secretKey;
 
-    @Value("${security.jwt.token-validity}")
+    @Value("${security.jwt.expiration-time}")
     private long tokenValidity;
 
     public String generateToken(String username, List<String> roles) {
@@ -33,12 +34,12 @@ public class JwtService {
             .compact();
     }
 
-    public Boolean validateToken(String token) {
+    public Mono<Boolean> validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            return true;
+            return Mono.just(true);
         } catch (Exception e) {
-            return false;
+            return Mono.just(false);
         }
     }
 
