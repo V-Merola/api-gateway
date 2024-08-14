@@ -24,9 +24,10 @@ public class SecurityConfig {
         return http
             .csrf(csrf -> csrf.disable())
             .authorizeExchange(exchanges -> exchanges
-                .pathMatchers("/auth/**").permitAll()
+                .pathMatchers("/auth/public/**").permitAll()  //Rivedere per forgPass e resetPass
+                .pathMatchers("/users/public/**").permitAll()
                 .pathMatchers("/admin/**").hasRole("ADMIN")
-                .pathMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                .pathMatchers("/users/**").hasAnyRole("USER", "ADMIN")
                 .anyExchange().authenticated()
             )
             .addFilterAt(jwtAuthenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
