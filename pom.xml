@@ -25,6 +25,13 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         
+         <!-- Cloud config -->
+        	<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-config</artifactId>
+</dependency>
+
+        
         <!-- Spring Security with WebFlux -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
