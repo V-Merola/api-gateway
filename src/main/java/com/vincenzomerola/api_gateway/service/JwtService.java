@@ -11,6 +11,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,7 @@ public class JwtService {
             .setClaims(claims)
             .setIssuedAt(new Date(System.currentTimeMillis()))
             .setExpiration(new Date(System.currentTimeMillis() + tokenValidity))
-            .signWith(SignatureAlgorithm.HS512, secretKey)
+            .signWith(SignatureAlgorithm.HS256, secretKey)
             .compact();
     }
 
@@ -50,6 +51,12 @@ public class JwtService {
     public List<GrantedAuthority> getRolesFromToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
         List<String> roles = claims.get("roles", List.class);
+
+        if (roles == null) {
+            // Lancia un'eccezione se il campo "roles" non è presente nel token
+            throw new NoSuchElementException("Roles not found in the JWT token");
+        }
+
         return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 

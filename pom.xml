@@ -31,6 +31,16 @@
     <artifactId>spring-cloud-starter-config</artifactId>
 </dependency>
 
+<!-- dipendenze per decodifica jwt-->
+   <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+        <version>2.3.1</version>
+    </dependency>
+    <dependency>
+        <groupId>org.glassfish.jaxb</groupId>
+        <artifactId>jaxb-runtime</artifactId>
+    </dependency>
         
         <!-- Spring Security with WebFlux -->
         <dependency>
